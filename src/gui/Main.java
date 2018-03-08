@@ -25,7 +25,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 			Button check = new Button("check");
 			check.setOnAction(this);
 
-			root.setGridLinesVisible(true);
+			// root.setGridLinesVisible(true);
 
 			root.setHgap(10);
 			root.setVgap(10);
@@ -55,7 +55,6 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
 			Scene scene = new Scene(root);
 
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch (Exception e) {
@@ -75,6 +74,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 		boolean[] isSet = new boolean[4];
 		System.out.println("event" + isSet[1]);
 		
+		//the first if and three else if change the colors on guesses buttons
 
 		if (b.getStyle().equals("-fx-background-color: green;")) {
 			b.setStyle("-fx-background-color: white;");
@@ -84,52 +84,104 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 			b.setStyle("-fx-background-color: red;");
 		} else if (b.getStyle().equals("-fx-background-color: red;")) {
 			b.setStyle("-fx-background-color: green;");
+			
+			
+		// inside this else if a check between the guess colors and the computer choises are made
 		} else if (b.getText().equals("check")) {
 			String[] color = Controller.getInstance().getColor();
-			System.out.println("check");
-			// for loop checks if guess is equal computer color chooise on same index
+			
+			int black = 0;
+			int white = 0;
+			// for loop checks if guess is equal to computer color choice on same index
 			for (int x = 0; x < 4; x++) {
 				System.out.println(color[x] + "computer choice");
 				if (color[x].equals(guesses[state][x].getStyle())) {
-					checks[state][x].setStyle("-fx-background-color: black;");
+					black++;
 					isSet[x] = true;
-					System.out.println(x + checks[state][x].getStyle());
 				} else if (color[x].equals(guesses[state][x].getStyle())) {
-					checks[state][x].setStyle("-fx-background-color: black;");
+					black++;
 					isSet[x] = true;
-					System.out.println(x + checks[state][x].getStyle());
 				} else if (color[x].equals(guesses[state][x].getStyle())) {
-					checks[state][x].setStyle("-fx-background-color: black;");
+					black++;
 					isSet[x] = true;
-					System.out.println(x + checks[state][x].getStyle());
 				} else if (color[x].equals(guesses[state][x].getStyle())) {
-					checks[state][x].setStyle("-fx-background-color: black;");
+					black++;
 					isSet[x] = true;
 				}
 			}
-
+			// here we check if a color occures in the computer choises but not in same index
 			for (int x = 0; x < 4; x++) {
 				for (int y = 0; y < 4; y++) {
-				if (!isSet[x] && !isSet[y]) {
-					if (color[x].equals(guesses[state][y].getStyle())) {
-						checks[state][x].setStyle("-fx-background-color: white;");
-						isSet[x] = true;
-					} else if (color[x].equals(guesses[state][y].getStyle())) {
-						checks[state][x].setStyle("-fx-background-color: white;");
-						isSet[x] = true;
-					} else if (color[x].equals(guesses[state][y].getStyle())) {
-						checks[state][x].setStyle("-fx-background-color: white;");
-						isSet[x] = true;
-					} else if (color[x].equals(guesses[state][y].getStyle())) {
-						checks[state][x].setStyle("-fx-background-color: white;");
-						isSet[x] = true;
+					if (!isSet[x] && !isSet[y]) {
+						if (color[x].equals(guesses[state][y].getStyle())) {
+							white++;
+							isSet[x] = true;
+						} else if (color[x].equals(guesses[state][y].getStyle())) {
+							white++;
+							isSet[x] = true;
+						} else if (color[x].equals(guesses[state][y].getStyle())) {
+							white++;
+							isSet[x] = true;
+						} else if (color[x].equals(guesses[state][y].getStyle())) {
+							white++;
+							isSet[x] = true;
+						}
 					}
 				}
 			}
+			// here we set how many of the colors where right and set on the right index
+			for (int x = 0; x < black; x++) {
+				checks[state][x].setStyle("-fx-background-color: black;");
+			}
+			// here we set how many colors where right but in wrong index
+			for (int x = 0 + black; x < white + black; x++) {
+				checks[state][x].setStyle("-fx-background-color: white;");
 			}
 
+			state++;
+
+			// for (int x = 0; x < 4; x++) {
+			// System.out.println(color[x] + "computer choice");
+			// if (color[x].equals(guesses[state][x].getStyle())) {
+			// checks[state][x].setStyle("-fx-background-color: black;");
+			// isSet[x] = true;
+			// System.out.println(x + checks[state][x].getStyle());
+			// } else if (color[x].equals(guesses[state][x].getStyle())) {
+			// checks[state][x].setStyle("-fx-background-color: black;");
+			// isSet[x] = true;
+			// System.out.println(x + checks[state][x].getStyle());
+			// } else if (color[x].equals(guesses[state][x].getStyle())) {
+			// checks[state][x].setStyle("-fx-background-color: black;");
+			// isSet[x] = true;
+			// System.out.println(x + checks[state][x].getStyle());
+			// } else if (color[x].equals(guesses[state][x].getStyle())) {
+			// checks[state][x].setStyle("-fx-background-color: black;");
+			// isSet[x] = true;
+			// }
+			// }
+			//
+			// for (int x = 0; x < 4; x++) {
+			// for (int y = 0; y < 4; y++) {
+			// if (!isSet[x] && !isSet[y]) {
+			// if (color[x].equals(guesses[state][y].getStyle())) {
+			// checks[state][x].setStyle("-fx-background-color: white;");
+			// isSet[x] = true;
+			// } else if (color[x].equals(guesses[state][y].getStyle())) {
+			// checks[state][x].setStyle("-fx-background-color: white;");
+			// isSet[x] = true;
+			// } else if (color[x].equals(guesses[state][y].getStyle())) {
+			// checks[state][x].setStyle("-fx-background-color: white;");
+			// isSet[x] = true;
+			// } else if (color[x].equals(guesses[state][y].getStyle())) {
+			// checks[state][x].setStyle("-fx-background-color: white;");
+			// isSet[x] = true;
+			// }
+			// }
+			// }
+			// }
+
 		}
-		// state++;
+
 	}
 
 }
